@@ -1,0 +1,22 @@
+version: "3" # Versi docker compose
+
+services: # Services section
+  item-app: # Service item-app
+    container_name: item-app # Set nama container ke item-app
+    image: ghcr.io/ekajaya740/item-app:v1 # Pull image item-app:v1 dari GitHub Packages
+    restart: always # Menerapkan restart always policy
+    ports: # Port mapping
+      - "80:8080" # Port mapping dari 8080 (container) ke 80 (host)
+    depends_on: # Container dependency
+      - item-db # Container item-db harus berjalan sebelum item-app
+  item-db: # Service item-db
+    container_name: item-db # Set nama container ke item-db
+    restart: always # Menerapkan restart always policy
+    image: mongo:3 # Menggunakan image mongo:3
+    ports: # Port mapping
+      - "27017:27017" # Port mapping default port mongodb dari 27017 (container) ke 27017 (host)
+    volumes: # Menggunakan volume app-db
+      - app-db:/data/db # Volume mapping app-db ke /data/db pada container
+
+volumes: # List volume (akan terbuat secara otomatis jika tidak ada)
+  app-db: # Volume dengan nama-project_app-db
