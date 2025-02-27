@@ -1,0 +1,30 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: karsajobs-ui
+  namespace: karsajobs-ns
+  labels:
+    app: karsajobs-ui
+    tier: app
+spec:
+  selector:
+    matchLabels:
+      app: karsajobs-ui
+      tier: app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: karsajobs-ui
+        tier: app
+    spec:
+      containers:
+        - name: karsajobs-ui
+          image: ghcr.io/ekajaya740/karsajobs-ui:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: GITHUB_TOKEN
+              value: $GITHUB_TOKEN
+---
+
