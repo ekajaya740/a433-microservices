@@ -7,9 +7,10 @@ spec:
   clusterIP: None
   selector:
     app: mongo
-    tier: backend
+    tier: data
   type:
   ports:
     - port: 27017
+      targetPort: 21017
 ---
 

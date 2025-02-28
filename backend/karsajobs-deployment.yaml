@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: karsajobs
+  namespace: karsajobs-ns
+  labels:
+    app: karsajobs
+    tier: app
+spec:
+  selector:
+    matchLabels:
+      app: karsajobs
+      tier: app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: karsajobs
+        tier: app
+    spec:
+      containers:
+        - name: karsajobs
+          image: ghcr.io/ekajaya740/karsajobs:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: MONGO_HOST
+              value: "mongo.karsajobs-ns.svc.cluster.local"
+            - name: MONGO_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: root-username
+            - name: MONGO_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: root-password
+---
+

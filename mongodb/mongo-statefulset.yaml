@@ -9,14 +9,14 @@ spec:
   selector:
     matchLabels:
       app: mongo
-      tier: backend
+      tier: data
   serviceName: mongo
   replicas: 1
   template:
     metadata:
       labels:
         app: mongo
-        tier: backend
+        tier: data
     spec:
       terminationGracePeriodSeconds: 10
       containers:
