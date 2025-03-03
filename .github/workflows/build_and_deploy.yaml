@@ -5,7 +5,7 @@ on:
     branches:
       - karsajobs
 jobs:
-  lint-dockerfile:
+  actions:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.ACTIONS_SECRET }}
