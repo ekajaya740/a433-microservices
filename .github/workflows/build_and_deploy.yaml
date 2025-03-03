@@ -7,8 +7,6 @@ on:
 jobs:
   actions:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - name: Lint
@@ -24,4 +22,6 @@ jobs:
       - name: Set execute permissions
         run: chmod +x build_push_image_karsajobs.sh
       - name: Build Docker Image
-        run: bash build_push_image_karsajobs.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        run: ./build_push_image_karsajobs.sh
