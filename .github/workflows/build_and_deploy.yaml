@@ -22,6 +22,4 @@ jobs:
       - name: Set execute permissions
         run: chmod +x build_push_image_karsajobs.sh
       - name: Build Docker Image
-        env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        run: ./build_push_image_karsajobs.sh
+        run: ./build_push_image_karsajobs.sh "${{ secrets.ACCESS_TOKEN }}"
