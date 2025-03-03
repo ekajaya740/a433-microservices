@@ -26,4 +26,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build Docker Image
-        uses: bash build_push_image_karsajobs.sh
+        run: bash build_push_image_karsajobs.sh
