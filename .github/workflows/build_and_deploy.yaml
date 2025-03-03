@@ -1,0 +1,21 @@
+name: Build and Deploy Action
+run-name: Building and Deploying Image
+on:
+  push:
+    branches:
+      - karsajobs-ui
+jobs:
+  actions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lint
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+      - name: Set execute permissions
+        run: chmod +x build_push_image_karsajobs_ui.sh
+      - name: Build Docker Image
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
+        run: ./build_push_image_karsajobs_ui.sh
