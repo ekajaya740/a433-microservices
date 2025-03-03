@@ -1,0 +1,27 @@
+name: Build and Deploy Action
+run-name: Building and Deploying Image
+on:
+  push:
+    branches:
+      - karsajobs
+jobs:
+  lint-dockerfile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lint
+        uses: hadolint/hadolint-action@v3.1.0
+  test-app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Go
+        uses: actions/setup-go@v5
+      - name: Test app
+        uses: go test -v -short --count=1 $(go list ./...)
+  build-app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Docker Image
+        uses: bash build_push_image_karsajobs.sh
