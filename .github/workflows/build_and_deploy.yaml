@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-go@v5
       - name: Test app
         uses: go test -v -short --count=1 $(go list ./...)
-  build-app:
+  build-app-karsajobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
