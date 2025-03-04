@@ -25,6 +25,8 @@ spec: # Spesifikasi deployment
           env: # Set environment yang diperlukan
             - name: MONGO_HOST
               value: "mongo.karsajobs-ns.svc.cluster.local"
+            - name: APP_PORT
+              value: "8080"
             - name: MONGO_USER
               valueFrom:
                 secretKeyRef:
