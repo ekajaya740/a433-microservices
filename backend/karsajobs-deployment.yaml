@@ -30,12 +30,12 @@ spec: # Spesifikasi deployment
             - name: MONGO_USER
               valueFrom:
                 secretKeyRef:
-                  name: mongodb-secret
-                  key: root-username
+                  name: mongo-secret
+                  key: MONGO_ROOT_USERNAME
             - name: MONGO_PASS
               valueFrom:
                 secretKeyRef:
-                  name: mongodb-secret
-                  key: root-password
+                  name: mongo-secret
+                  key: MONGO_ROOT_PASSWORD
 ---
 
