@@ -1,15 +1,16 @@
 apiVersion: v1
-kind: Service
+kind: Service # Membuat Service
 metadata:
-  name: karsajobs-ui
-  namespace: karsajobs-ns
-  labels:
+  name: karsajobs-ui # Nama Service
+  namespace: karsajobs-ns # Terdapat pada namespace karsajobs-ns
+  labels: # Dengan label sebagai berikut
     app: karsajobs-ui
-spec:
-  selector:
-    app: karsajobs-ui 
-  type: NodePort  
+spec: # Spesifikasi service
+  selector: # Select pod yang akan connect ke service dengan aturan di bawah
+    app: karsajobs-ui
+  type: NodePort # Tipe service adalah NodePort
   ports:
     - port: 8000
       targetPort: 8000
-      nodePort: 30000
+      nodePort: 30000 # Ini ada karena NodePort untuk membantu akses pod dari pod lain
+

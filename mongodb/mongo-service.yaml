@@ -1,15 +1,15 @@
 apiVersion: v1
-kind: Service
+kind: Service # Membuat service
 metadata:
-  name: mongo
-  namespace: karsajobs-ns
+  name: mongo # Nama service
+  namespace: karsajobs-ns # Service terdapat pada namespace karsajobs-ns
 spec:
-  clusterIP: None
-  selector:
+  clusterIP: None # Service berupa headless service
+  selector: # Select service dengan spesifikasi sebagai berikut
     app: mongo
     tier: data
   type:
-  ports:
+  ports: # Expose port
     - port: 27017
       targetPort: 21017
 ---

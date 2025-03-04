@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service # Membuat service
+metadata:
+  name: prometheus # Nama service
+  namespace: monitoring # Namespace service
+spec: # Spesifikasi service
+  selector: # Cari pod dengan label berikut
+    app: prometheus
+  type: NodePort # Tipe service NodePort
+  ports: # Expose port
+    - port: 9090
+      targetPort: 9090
+      nodePort: 32090
+---
+

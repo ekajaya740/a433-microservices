@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service # Membuat service
+metadata:
+  name: grafana # Nama service
+  namespace: monitoring # Service ada pada namespace monitoring
+spec: # Spesifikasi service
+  selector: # Cari pod dengan properti sebagai berikut
+    app: grafana
+  type: NodePort # Tipe service adalah NodePort
+  ports: # Expose port
+    - port: 3030
+      targetPort: 3030
+      nodePort: 32030
+---
+

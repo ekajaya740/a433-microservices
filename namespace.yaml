@@ -1,4 +1,4 @@
 apiVersion: v1
-kind: Namespace
+kind: Namespace # Membuat namespase
 metadata:
-  name: karsajobs-ns
+  name: karsajobs-ns # Namespace bernama karsajobs-ns

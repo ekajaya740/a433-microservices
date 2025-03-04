@@ -1,9 +1,9 @@
 apiVersion: v1
-kind: ConfigMap
+kind: ConfigMap # Membuat ConfigMap
 metadata:
-  name: mongo-config
-  namespace: karsajobs-ns
-data:
+  name: mongo-config # Nama ConfigMap
+  namespace: karsajobs-ns # Terdapat pada namespace karsajobs-ns
+data: # Berikut list ConfigMap yang akan diterapkan
   mongod.conf: |
     storage:
       dbPath: /data/db

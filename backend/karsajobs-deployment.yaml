@@ -1,28 +1,28 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: Deployment # Membuat deployment
 metadata:
-  name: karsajobs
-  namespace: karsajobs-ns
-  labels:
+  name: karsajobs # Nama deployment karsajobs
+  namespace: karsajobs-ns # Deployment terdapat pada namespace karsajobs-ns
+  labels: # Degan label sebagai berikut
     app: karsajobs
     tier: app
-spec:
-  selector:
+spec: # Spesifikasi deployment
+  selector: # Select label dengan metadata
     matchLabels:
       app: karsajobs
       tier: app
-  replicas: 2
-  template:
+  replicas: 2 # Jumlah pods yang akan di up
+  template: # Pod akan identik dengan config sebagai berikut
     metadata:
       labels:
         app: karsajobs
         tier: app
-    spec:
-      containers:
-        - name: karsajobs
-          image: ghcr.io/ekajaya740/karsajobs:latest
-          imagePullPolicy: IfNotPresent
-          env:
+    spec: # Spesifikasi pod
+      containers: # Menggunakan container
+        - name: karsajobs # Nama container
+          image: ghcr.io/ekajaya740/karsajobs:latest # Image yang digunakan
+          imagePullPolicy: IfNotPresent # Pull jika image belum ada
+          env: # Set environment yang diperlukan
             - name: MONGO_HOST
               value: "mongo.karsajobs-ns.svc.cluster.local"
             - name: MONGO_USER

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment # Membuat Deployment
+metadata:
+  name: grafana # Nama Deployment
+  namespace: monitoring # Deployment terdapat pada namespace monitoring
+  labels: # Dengan label sebagai berikut
+    app: grafana
+spec: # Spesifikasi deployment
+  selector: # Select dengan properti di bawah
+    matchLabels:
+      app: grafana
+  replicas: 1 # Hanya akan ada 1 pod yang di up
+  template: # Dengan Spesifikasi pod sebagai berikut
+    metadata: # Set metadata pod
+      labels:
+        app: grafana
+    spec: # Spesifikasi pod
+      containers: # Menggunakan container
+        - name: grafana # Nama container adalah grafana
+          image: grafana/grafana:latest # Menggunakan image grafana
+          imagePullPolicy: IfNotPresent # Pull image jika tidak ada
+          env: # Set environment
+            - name: GF_SERVER_HTTP_PORT
+              value: "3030"
+          ports: # Expose port
+            - containerPort: 3030
+      restartPolicy: Always # Selalu restart jika container error
+---
+

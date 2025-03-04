@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: StatefulSet # Membuat StatefulSet
+metadata:
+  name: prometheus # Nama StatefulSet
+  namespace: monitoring # Namespace StatefulSet
+spec: # Spesifikasi StatefulSet
+  selector: # Cari pod dengan label sebagai berikut
+    matchLabels:
+      app: prometheus
+  serviceName: "prometheus" # Nama service
+  replicas: 1 # Jumlah pod
+  template: # Pod yang akan dibikin
+    metadata: # Metadata pod
+      labels:
+        app: prometheus
+    spec: # Spesifikasi pod
+      terminationGracePeriodSeconds: 10 # Pod akan shutdown dalam 10 detik jika tershutdown
+      containers: # Spesifikasi containerPort
+        - name: prometheus # Nama container
+          image: prom/prometheus:latest # Image yang digunakan untuk container
+          ports: # Port container
+            - containerPort: 9090
+          volumeMounts: # Mount volume PV
+            - name: prometheus-pv
+              mountPath: /data/prom
+      volumes: # Volume PVC
+        - name: prometheus-pv
+          persistentVolumeClaim:
+            claimName: prometheus-pv-claim
+---
+

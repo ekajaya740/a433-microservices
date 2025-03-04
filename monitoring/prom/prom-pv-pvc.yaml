@@ -1,29 +1,29 @@
 apiVersion: v1
-kind: PersistentVolume # Membuat PersistentVolume
+kind: PersistentVolume # Membuat PersistentVolume untuk prometheus
 metadata:
-  name: mongo-pv # PersistentVolume dengan nama mongo-pv
-spec: # Dengan spesifikasi sebagai berikut
+  name: prometheus-pv # Nama PV
+spec: # Spesifikasi PV
   capacity:
-    storage: 2Gi # Storage PV adalah 2 Gi
+    storage: 2Gi # Storage pada PV
   accessModes:
     - ReadWriteOnce # accessModes ReadWriteOnce berarti hanya bisa diakses oleh 1 pod
   persistentVolumeReclaimPolicy: Retain # Agar volume tidak langsung di delete ketika PV di delete
   storageClassName: manual # StorageClass di konfigurasi secara manual
   hostPath:
-    path: /data/db # Mapping PV ke /data/db pada host
+    path: /data/prom # Mapping PV ke /data/prom pada host
 
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim # Membuat PersistentVolumeClaim
 metadata:
-  name: mongo-pv-claim # PersistentVolumeClaim dengan nama mongo-pv-claim
-  namespace: karsajobs-ns # PVS terdapat pada namespace karsajobs-ns
-  labels: # Dengan label sebagai berikut
-    app: mongo
+  name: prometheus-pv-claim # Nama PVC
+  namespace: monitoring # Namespace PVC
+  labels: # Memberi label pada PVC
+    app: prometheus
 spec: # Spesifikasi PVC
   storageClassName: manual # StorageClass di konfigurasi secara manual
   accessModes:
     - ReadWriteOnce # accessModes ReadWriteOnce berarti hanya bisa di akses oleh 1 pod
   resources:
     requests:
-      storage: 2Gi # Dengan storage 2Gi
+      storage: 2Gi # Storage PVC 2Gi

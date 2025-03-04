@@ -1,28 +1,28 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: Deployment # Membuat Deployment
 metadata:
-  name: karsajobs-ui
-  namespace: karsajobs-ns
-  labels:
+  name: karsajobs-ui # Nama Deployment
+  namespace: karsajobs-ns # Deployment terdapat pada namespace
+  labels: # Dengan label sebagai berikut
     app: karsajobs-ui
     tier: app
-spec:
-  selector:
+spec: # Spesifikasi deployment
+  selector: # Select label dengan metadata
     matchLabels:
       app: karsajobs-ui
       tier: app
-  replicas: 2
-  template:
+  replicas: 2 # Jumlah pod yang akan di up
+  template: # Pod akan identik dengan config sebagai berikut
     metadata:
       labels:
         app: karsajobs-ui
         tier: app
-    spec:
-      containers:
-        - name: karsajobs-ui
-          image: ghcr.io/ekajaya740/karsajobs-ui:latest
-          imagePullPolicy: IfNotPresent
-          env:
+    spec: # Spesifikasi pod
+      containers: # Menggunakan container
+        - name: karsajobs-ui # Nama container
+          image: ghcr.io/ekajaya740/karsajobs-ui:latest # Image yang akan digunakan
+          imagePullPolicy: IfNotPresent # Pull image hanya jika dia tidak ada
+          env: # Set environment variable
             - name: VUE_APP_BACKEND
               value: "http://192.168.49.2:30080"
 ---

@@ -1,28 +1,28 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: StatefulSet # Membuat StatefulSet
 metadata:
-  name: mongo
-  namespace: karsajobs-ns
-  labels:
+  name: mongo # Nama StatefulSet
+  namespace: karsajobs-ns # StatefulSet terdapat pada namespace
+  labels: # Dengan label sebagai berikut
     app: mongo
-spec:
-  selector:
+spec: # Spesifikasi StatefulSet
+  selector: # Select dengan label berikut
     matchLabels:
       app: mongo
       tier: data
-  serviceName: mongo
-  replicas: 1
-  template:
+  serviceName: mongo # Nama StatefulSet adalah mongo
+  replicas: 1 # Jumlah pod yang akan di up
+  template: # Dengan template pod sebagai berukut
     metadata:
       labels:
         app: mongo
         tier: data
-    spec:
-      terminationGracePeriodSeconds: 10
-      containers:
-        - name: mongo
-          image: mongo:latest
-          env:
+    spec: # Spesifikasi pod
+      terminationGracePeriodSeconds: 10 # Pod akan shutdown dalam 10 detik jika tershutdown
+      containers: # Menggunakan container
+        - name: mongo # Nama container adalah mongo
+          image: mongo:latest # Dengan image mongo:latest
+          env: # Set env yang diperlukan
             - name: MONGO_INITDB_ROOT_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -33,13 +33,13 @@ spec:
                 secretKeyRef:
                   name: mongodb-secret
                   key: root-password
-          ports:
+          ports: # Expose port
             - containerPort: 27017
               name: mongo
-          volumeMounts:
+          volumeMounts: # Mount ke PV
             - name: mongo-pv
               mountPath: /data/db
-      volumes:
+      volumes: # Koneksi ke PVC
         - name: mongo-pv
           persistentVolumeClaim:
             claimName: mongo-pv-claim
