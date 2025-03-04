@@ -23,23 +23,27 @@ spec: # Spesifikasi StatefulSet
         - name: mongo # Nama container adalah mongo
           image: mongo:latest # Dengan image mongo:latest
           env: # Set env yang diperlukan
-            - name: MONGO_INITDB_ROOT_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: mongodb-secret
-                  key: root-username
+            - name: MONGO_INITDB_ROOT_USERNAME_FILE
+              value: /etc/mongo-credentials/MONGO_ROOT_USERNAME
             - name: MONGO_INITDB_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mongodb-secret
-                  key: root-password
+              value: /etc/mongo-credentials/MONGO_ROOT_PASSWORD
           ports: # Expose port
             - containerPort: 27017
               name: mongo
           volumeMounts: # Mount ke PV
             - name: mongo-pv
               mountPath: /data/db
+            - name: mongo-config
+              mountPath: /config
+            - name: mongo-secret
+              mountPath: /etc/mongo-credentials
       volumes: # Koneksi ke PVC
+        - name: mongo-config
+          configMap:
+            name: mongo-config
+        - name: mongo-secret
+          secret:
+            secretName: mongo-secret
         - name: mongo-pv
           persistentVolumeClaim:
             claimName: mongo-pv-claim
