@@ -1,23 +1,23 @@
-name: Build and Deploy Action
-run-name: Building and Deploying Image
-on:
+name: Build and Deploy Action # Nama action
+run-name: Building and Deploying Image # Nama run name yang akan terlihat pada dashboard action
+on: # Kondisi aktivasi
   push:
     branches:
-      - karsajobs
-jobs:
-  actions:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Lint
-        uses: hadolint/hadolint-action@v3.1.0
-        with:
+      - karsajobs # Kondisi aktivasi action adalah ketika push ke branch karsajobs
+jobs: # Jobs
+  actions: # Nama jobs
+    runs-on: ubuntu-latest # Platform menjalankan jobs
+    steps: # Langkah-langkah
+      - uses: actions/checkout@v4 # Checkout sehingga workflow bisa mengakses repository
+      - name: Lint Dockerfile # Step 1: Lint Dockerfile
+        uses: hadolint/hadolint-action@v3.1.0 # Lint menggunakan hadolint
+        with: # Dengan dockerfile yang ada
           dockerfile: Dockerfile
-      - name: Test app
-        run: go test -v -short --count=1 $(go list ./...)
-      - name: Set execute permissions
+      - name: Test app # Step 2: Test app
+        run: go test -v -short --count=1 $(go list ./...) # Menjalankan command test
+      - name: Set execute permissions # Step 3: Set permission execute ke build_push_image_karsajobs.sh
         run: chmod +x build_push_image_karsajobs.sh
-      - name: Build Docker Image
-        env:
-          GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
-        run: ./build_push_image_karsajobs.sh
+      - name: Build Docker Image # Step 4: Build dan push docker image
+        env: # Set environment
+          GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }} # environment diambil dari repository secret pada GitHub
+        run: ./build_push_image_karsajobs.sh # Jalankan build_push_image_karsajobs.sh
