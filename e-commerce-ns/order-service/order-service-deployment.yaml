@@ -1,0 +1,33 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service-deployment
+  namespace: e-commerce-ns
+  labels:
+    app: order-service
+spec:
+  selector:
+    matchLabels:
+      app: order-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: order-service
+    spec:
+      containers:
+        - name: order-service-app
+          image: ghcr.io/ekajaya740/order-service:latest
+          imagePullPolicy: Always
+          resources:
+          env:
+            - name: PORT
+              value: "3000"
+            - name: AMQP_URL
+              value: "amqp://user:user@10.108.121.127:5672"
+          ports:
+            - containerPort: 3000
+      restartPolicy: Always
+---
+

@@ -1,0 +1,33 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shipping-service-deployment
+  namespace: e-commerce-ns
+  labels:
+    app: shipping-service
+spec:
+  selector:
+    matchLabels:
+      app: shipping-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: shipping-service
+    spec:
+      containers:
+        - name: shipping-service-app
+          image: ghcr.io/ekajaya740/shipping-service:latest
+          imagePullPolicy: Always
+          resources:
+          env:
+            - name: PORT
+              value: "3001"
+            - name: AMQP_URL
+              value: "amqp://user:user@10.108.121.127:5672"
+          ports:
+            - containerPort: 3000
+      restartPolicy: Always
+---
+
