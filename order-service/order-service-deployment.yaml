@@ -3,18 +3,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: order-service-deployment
-  namespace: e-commerce-ns
+  namespace: default
   labels:
     app: order-service
+    istio: ingressgateway
 spec:
   selector:
     matchLabels:
       app: order-service
+      istio: ingressgateway
   replicas: 1
   template:
     metadata:
       labels:
         app: order-service
+        istio: ingressgateway
     spec:
       containers:
         - name: order-service-app
@@ -25,7 +28,7 @@ spec:
             - name: PORT
               value: "3000"
             - name: AMQP_URL
-              value: "amqp://user:user@10.108.121.127:5672"
+              value: "amqp://user:0uovT6jbfAa9TWep@rabbitmq.rabbitmq:5672"
           ports:
             - containerPort: 3000
       restartPolicy: Always

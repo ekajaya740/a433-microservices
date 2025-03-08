@@ -2,4 +2,4 @@
 
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
-helm install my-rabbitmq bitnami/rabbitmq
+helm install rabbitmq bitnami/rabbitmq --namespace rabbitmq

@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: shipping-service-deployment
-  namespace: e-commerce-ns
+  namespace: default
   labels:
     app: shipping-service
 spec:
@@ -25,9 +25,9 @@ spec:
             - name: PORT
               value: "3001"
             - name: AMQP_URL
-              value: "amqp://user:user@10.108.121.127:5672"
+              value: "amqp://user:0uovT6jbfAa9TWep@rabbitmq.rabbitmq:5672"
           ports:
-            - containerPort: 3000
+            - containerPort: 3001
       restartPolicy: Always
 ---
 
